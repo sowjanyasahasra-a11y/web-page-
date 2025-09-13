@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>CODE LEARNING PLATFROM</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin:0; background:#f4f6f9; }
+    header { background:#2c3e50; color:white; padding:15px; text-align:center; }
+    section { padding:20px; }
+    textarea {
+      width:100%; height:200px; font-family: monospace; font-size:14px;
+      border:1px solid #ccc; border-radius:5px; padding:10px; resize:none;
+    }
+    button {
+      margin:5px; padding:10px 15px; border:none; border-radius:5px;
+      cursor:pointer; background:#27ae60; color:white;
+    }
+    button:hover { background:#1e8449; }
+    #output, #suggestions {
+      margin-top:15px; padding:10px; border-radius:5px;
+    }
+    #output { background:white; border:1px solid #ddd; min-height:60px; }
+    #suggestions { background:#ecf0f1; border:1px solid #ccc; }
+    .exercise { background:white; padding:10px; margin:10px 0; border:1px solid #ddd; border-radius:5px; }
+  </style>
+</head>
+<body>
+  <header>💻 Code Learning Assistant</header>
+  <section>
+    <h3>Write Your Code (JavaScript)</h3>
+    <textarea id="codeEditor">// Example: console.log("Hello, world!");</textarea><br>
+    <button onclick="runCode()">▶ Run Code</button>
+    <button onclick="clearCode()">🧹 Clear</button>
+
+    <div id="output"><strong>Output:</strong><br></div>
+    <div id="suggestions"><strong>Suggestions:</strong><br>Write some code and run it to see hints.</div>
+
+    <h3>Practice Exercises</h3>
+    <div class="exercise">
+      <p>👉 Print numbers from 1 to 5 using a loop.</p>
+    </div>
+    <div class="exercise">
+      <p>👉 Write a function that returns the square of a number.</p>
+    </div>
+    <div class="exercise">
+      <p>👉 Create an array of fruits and display the first one.</p>
+    </div>
+  </section>
+
+  <script>
+    function runCode() {
+      const code = document.getElementById("codeEditor").value;
+      const outputDiv = document.getElementById("output");
+      const suggestionsDiv = document.getElementById("suggestions");
+
+      outputDiv.innerHTML = "<strong>Output:</strong><br>";
+      suggestionsDiv.innerHTML = "<strong>Suggestions:</strong><br>";
+
+      try {
+        let result = eval(code);
+        if (result !== undefined) {
+          outputDiv.innerHTML += result;
+        }
+        suggestionsDiv.innerHTML += "✅ Code ran successfully!";
+      } catch (error) {
+        outputDiv.innerHTML += "❌ Error: " + error.message;
+        // Basic debugging hints
+        if (error.message.includes("Unexpected identifier")) {
+          suggestionsDiv.innerHTML += "Hint: Did you forget a semicolon or misspell a keyword?";
+        } else if (error.message.includes("is not defined")) {
+          suggestionsDiv.innerHTML += "Hint: Did you declare your variables with let/const?";
+        } else if (error.message.includes("Unexpected token")) {
+          suggestionsDiv.innerHTML += "Hint: Check your brackets, quotes, or commas.";
+        } else {
+          suggestionsDiv.innerHTML += "Try checking syntax and variable names.";
+        }
+      }
+    }
+
+    function clearCode() {
+      document.getElementById("codeEditor").value = "";
+      document.getElementById("output").innerHTML = "<strong>Output:</strong><br>";
+      document.getElementById("suggestions").innerHTML = "<strong>Suggestions:</strong><br>Editor cleared.";
+    }
+  </script>
+</body>
+</html>
